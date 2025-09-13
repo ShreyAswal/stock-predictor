@@ -10,13 +10,15 @@ function App() {
   const handlePredict = async (ticker, epochs) => {
     setLoading(true);
     setResult(null);
-
     try {
-      const response = await fetch("http://127.0.0.1:5000/train", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ticker, epochs }),
-      });
+      const response = await fetch(
+        "https://stock-predictor-api.onrender.com/train",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ ticker, epochs }),
+        }
+      );
 
       const data = await response.json();
       setResult(data);
@@ -34,7 +36,9 @@ function App() {
 
         <StockForm onPredict={handlePredict} />
 
-        {loading && <p className="loading">⏳ Training model, please wait...</p>}
+        {loading && (
+          <p className="loading">⏳ Training model, please wait...</p>
+        )}
 
         {result && <Result data={result} />}
       </div>
